@@ -1,11 +1,20 @@
-import { useState } from 'react';
-import './App.css';
+import { useState } from 'react'
+import './App.css'
 import search from './assets/icons/search.svg'
-import { BackgroundLayout } from './Components'
-
+import { useStateContext } from './Context'
+import { BackgroundLayout, WeatherCard, MiniCard } from './Components'
 
 function App() {
-  const [input , setInput] = useState('')
+
+  const [input, setInput] = useState('')
+  const { weather, thisLocation, values, place, setPlace } = useStateContext()
+  // console.log(weather)
+
+  const submitCity = () => {
+    setPlace(input)
+    setInput('')
+  }
+
   return (
     <div className='w-full h-screen text-white px-8'>
       <nav className='w-full p-3 flex justify-between items-center'>
@@ -15,13 +24,13 @@ function App() {
           <input onKeyUp={(e) => {
             if (e.key === 'Enter') {
               // sumit the form
-              // submitCity()
+              submitCity()
             }
           }} type="text" placeholder='Search city' className='focus:outline-none w-full text-[#212121] text-lg' value={input} onChange={e => setInput(e.target.value)} />
         </div>
       </nav>
       <BackgroundLayout></BackgroundLayout>
-      {/* <main className='w-full flex flex-wrap gap-8 py-4 px-[10%] items-center justify-center'>
+      <main className='w-full flex flex-wrap gap-8 py-4 px-[10%] items-center justify-center'>
         <WeatherCard
           place={thisLocation}
           windspeed={weather.wspd}
@@ -46,9 +55,9 @@ function App() {
             })
           }
         </div>
-      </main> */}
+      </main>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
